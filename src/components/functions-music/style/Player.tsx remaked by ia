@@ -1,0 +1,87 @@
+import React, { useEffect, useState } from 'react';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
+import './style/player.css';
+import filesLocation from './style/path_routes_files';
+
+function Player() {
+  const [volume, setVolume] = useState(50);
+  const [selectedFile, setSelectedFile] = useState('rabetão-9d.mp4a');
+  const [name, setName] = useState('Mc Lan :Rabetão 8D');
+  const [img, setImg] = useState('0.jpg');
+  const [active, setActive] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    const volumeContainer = document.querySelector('.rhap_volume-container');
+    if (volumeContainer) volumeContainer.setAttribute('aria-valuenow', volume);
+
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [volume, active, isPlaying]);
+
+  const handleKeyPress = (e) => {
+    if (e.code === 'Space' && active !== null && active < filesLocation.length) {
+      const index = active;
+      const path = filesLocation[index]?.path;
+      if (path) togglePlay();
+    }
+  };
+
+  const togglePlay = () => {
+    const audioPlayer = document.querySelector('.component-musica audio');
+    if (audioPlayer) isPlaying ? audioPlayer.pause() : audioPlayer.play();
+  };
+
+  const handleEnded = () => {
+    const nextIndex = active !== null && active + 1 < filesLocation.length ? active + 1 : null;
+    if (nextIndex !== null) updateAudio(nextIndex);
+  };
+
+  const handleListItemClick = (index) => {
+    const nextIndex = active === index ? null : index;
+    updateAudio(nextIndex);
+  };
+
+  const updateAudio = (index) => {
+    const file = filesLocation[index];
+    setActive(index);
+    setSelectedFile(file?.path || 'rabetão-9d.mp4a');
+    setName(file?.index || 'Mc Lan :Rabetão 8D');
+    setImg(file?.img || '0.jpg');
+  };
+
+  return (
+    <main className='container-player flex-container'>
+      <div className='container-player'>
+        <h1 className='tittle-musica'>{name}</h1>
+        <img src={img} alt="mc-8d" />
+
+        <AudioPlayer
+          className='component-musica'
+          autoPlay
+          src={selectedFile}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={handleEnded}
+          volume={volume / 100}
+        />
+      </div>
+      <div className='container-player'>
+        <ul className='container-playlist'>
+          {filesLocation.map((file, index) => (
+            <li
+              className={index === active ? 'sua-classe-ativa' : 'sua-classe-padrao'}
+              key={index}
+              onClick={() => handleListItemClick(index)}
+            >
+              <p>{file.index}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </main>
+  );
+}
+
+export default Player;

@@ -1,0 +1,68 @@
+.flex-container{
+    display: flex;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.container-player{
+    list-style-type: none;
+    text-decoration: none;
+    margin: 4pt 0pt 0pt 4pt;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    border-radius: 5px;
+    gap: 2pt 2pt;
+}
+.container-player-extra{
+    margin: 0;
+    border-radius:0pt 0pt 0pt 5px;
+
+    padding: 0;
+    gap: 0px 0px;
+    display: grid;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+.container-player h1{
+    text-decoration: underline;
+    font-size: 18pt;
+    padding: 15pt 0pt;
+}
+.container-player img{
+ max-width: 100%;
+ border-radius: 6pt 6pt 0pt 0pt;
+ object-fit:none;
+}
+
+.container-playlist{
+min-width: 180px;
+box-shadow:none;
+}
+.container-playlist li.active{
+text-decoration: underline 2px black;    
+transition: all ease-in-out 2s;
+}
+
+.rhap_container{
+    border-radius: 0pt 0pt 0pt 6pt;
+    box-shadow: none;
+}
+
+
+
+.rhap_main {
+    position: relative;
+}
+
+.rhap_total-time,.rhap_current-time{
+position: absolute;
+font-weight: 600;
+margin-top: 25pt;
+}
+
+.rhap_total-time{
+    right: 0;
+
+}
+.rhap_current-time{
+left: 0;
+}
